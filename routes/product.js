@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
         if (category) {
             filter.category = category;
         }
-        res.status(200).send(await Product.find())
+        res.status(200).send(await Product.find(filter))
     } catch (error) {
         res.status(400).send({ message: "Product not found"})
     }

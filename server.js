@@ -22,7 +22,7 @@ app.use(corsHandler);
 
 // MongoDB Connection
 mongoose
-.connect("mongodb://127.0.0.1:27017/ecommerce")
+.connect("mongodb://127.0.0.1:27017/e-commerce")
 .then(() => console.log("MongoDBConnected... "))
 .catch((err) => console.log(err));
 
@@ -40,4 +40,6 @@ app.get("/", (req, res) => {
 });
 
 // Server listening
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(1226, () => {
+  console.log("Server is running at http://localhost:1226");
+});
