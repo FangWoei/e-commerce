@@ -4,30 +4,40 @@ const { Schema, model } = mongoose;
 const productSchema = require("./product");
 
 const orderSchema = new Schema({
-    customerName: {
-        type: String,
-        required: true,
-      },
-
-    customerEmail: {
-        type: String,
-        required: true,
-      },
-
-    products:{
-        type: Schema.Types.ObjectId,
-        ref: "Product",
+  customerName: {
+    type: String,
+    required: true,
   },
 
-    totalPrice:{
-        type: Number,
-        required: true,
+  customerEmail: {
+    type: String,
+    required: true,
+  },
+
+  products: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
     },
-    
-    status:{
-        type:String,
-        enum:["Pending", "Shipped", "Delivered"],
-    },
+  ],
+
+  totalPrice: {
+    type: Number,
+    required: true,
+  },
+
+  status: {
+    type: String,
+    default: "Pending",
+    enum: ["Pending", "Paid", "Failed", "Shipped", "Delivered"],
+  },
+  billplz_id: {
+    type: String,
+    required: true,
+  },
+  paid_at: {
+    type: Date,
+  },
 });
 
 const Order = model("Order", orderSchema);

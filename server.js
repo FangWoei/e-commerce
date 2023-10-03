@@ -4,8 +4,7 @@ const cors = require("cors");
 
 const app = express();
 app.use(express.json());
-const port = 5000;
-
+const port = 1226;
 
 // setup cors
 const corsHandler = cors({
@@ -18,28 +17,34 @@ const corsHandler = cors({
 
 app.use(corsHandler);
 
-
-
 // MongoDB Connection
 mongoose
-.connect("mongodb://127.0.0.1:27017/e-commerce")
-.then(() => console.log("MongoDBConnected... "))
-.catch((err) => console.log(err));
-
-
+  .connect("mongodb://127.0.0.1:27017/e-commerce")
+  .then(() => console.log("MongoDBConnected... "))
+  .catch((err) => console.log(err));
 
 // routes
 const orderRouter = require("./routes/order");
 const productRouter = require("./routes/product");
+const imageRouter = require("./routes/image");
+const paymentRouter = require("./routes/payment");
+const authRouter = require("./routes/auth");
 
-app.use("/orders", orderRouter );
-app.use("/products", productRouter );
+app.use("/orders", orderRouter);
+app.use("/products", productRouter);
+app.use("/images", imageRouter);
+app.use("/payment", paymentRouter);
+app.use("/auth", authRouter);
+/*
+    http://localhost:1226/auth/register
+    http://localhost:1226/auth/login
+*/
+
+// set the uploads folder as static path
+app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {
   res.send("E-Commerce");
 });
 
-// Server listening
-app.listen(1226, () => {
-  console.log("Server is running at http://localhost:1226");
-});
+app.listen(port, () => console.log(`Server started on port ${port}`));
